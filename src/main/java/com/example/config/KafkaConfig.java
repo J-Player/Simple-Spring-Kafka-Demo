@@ -1,6 +1,6 @@
-package app.config;
+package com.example.config;
 
-import app.constant.ApplicationConstant;
+import com.example.constant.ApplicationConstant;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -40,11 +40,11 @@ public class KafkaConfig {
     @Bean
     public ConsumerFactory<String, String> consumer() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, ApplicationConstant.KAFKA_LOCAL_SERVER_CONFIG);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, ApplicationConstant.KAFKA_LOCAL_SERVER_CONFIG);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, ApplicationConstant.GROUP_ID_STRING);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, ApplicationConstant.GROUP_ID_CONFIG);
         return new DefaultKafkaConsumerFactory<>(props);
     }
 

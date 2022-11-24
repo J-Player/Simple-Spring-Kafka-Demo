@@ -1,6 +1,6 @@
-package app.consumer;
+package com.example.consumer;
 
-import app.constant.ApplicationConstant;
+import com.example.constant.ApplicationConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -11,7 +11,7 @@ public class KafkaConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
 
-    @KafkaListener(topics = ApplicationConstant.TOPIC_NAME, groupId = ApplicationConstant.GROUP_ID_STRING, containerFactory = ApplicationConstant.KAFKA_LISTENER_CONTAINER_FACTORY)
+    @KafkaListener(topics = ApplicationConstant.TOPIC_NAME, groupId = ApplicationConstant.GROUP_ID_CONFIG, containerFactory = ApplicationConstant.KAFKA_LISTENER_CONTAINER_FACTORY)
     public void consumer(String message) {
         log.info("Mensagem: {}.", message);
     }
