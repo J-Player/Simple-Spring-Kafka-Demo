@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.constant.ApplicationConstant;
+import com.example.config.KafkaConstraints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,7 @@ public class AppController {
 
     @GetMapping("/producer/{message}")
     public String producer(@PathVariable String message) {
-        kafkaTemplate.send(ApplicationConstant.TOPIC_NAME, message);
+        kafkaTemplate.send(KafkaConstraints.TOPIC_NAME, message);
         return message;
     }
 

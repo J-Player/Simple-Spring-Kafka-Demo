@@ -1,6 +1,6 @@
 package com.example.config;
 
-import com.example.constant.ApplicationConstant;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -8,6 +8,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.*;
 
 import java.util.HashMap;
@@ -15,6 +16,13 @@ import java.util.Map;
 
 @Configuration
 public class KafkaConfig {
+
+    @Bean
+    public NewTopic newTopic() {
+        return TopicBuilder.name(KafkaConstraints.TOPIC_NAME)
+                .compact()
+                .build();
+    }
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
@@ -31,7 +39,7 @@ public class KafkaConfig {
     @Bean
     public ProducerFactory<String, String> producer() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, ApplicationConstant.KAFKA_LOCAL_SERVER_CONFIG);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstraints.KAFKA_LOCAL_SERVER_CONFIG);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         return new DefaultKafkaProducerFactory<>(props);
@@ -40,11 +48,11 @@ public class KafkaConfig {
     @Bean
     public ConsumerFactory<String, String> consumer() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, ApplicationConstant.KAFKA_LOCAL_SERVER_CONFIG);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConstraints.KAFKA_LOCAL_SERVER_CONFIG);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, ApplicationConstant.GROUP_ID_CONFIG);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, KafkaConstraints.GROUP_ID_CONFIG);
         return new DefaultKafkaConsumerFactory<>(props);
     }
 

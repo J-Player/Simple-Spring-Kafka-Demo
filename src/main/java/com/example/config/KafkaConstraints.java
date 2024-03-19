@@ -1,8 +1,10 @@
-package com.example.constant;
+package com.example.config;
 
-public abstract class ApplicationConstant {
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-    private ApplicationConstant() {}
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public abstract class KafkaConstraints {
 
     public static final String TOPIC_NAME = "topic-name";
     public static final String GROUP_ID_CONFIG = "group-id";
